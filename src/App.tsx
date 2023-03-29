@@ -3,7 +3,7 @@ import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
 import { Modal, SearchFilter } from './components'
-import { Button } from '@mui/material'
+import { Button, Typography } from '@mui/material'
 
 import { FormChain } from './FormChain'
 import { AlertDelete } from './components/AlertDelete'
@@ -58,6 +58,8 @@ function App() {
         close={handleModalClose}
         open={false}
         agreeDelete={agreeDelete}
+        titleModal={<Typography fontSize={20}>Eliminar</Typography>}
+        bodyText={<>Se borraran todos los datos referentes a este registro de forma pertenente.<br/><br/>Desea proceder</>}
       />
       <Modal
         isOpen={isOpen}
