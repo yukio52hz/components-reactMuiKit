@@ -1,0 +1,1 @@
+export {Input,Modal,AlertDelete,SearchFilter,MultiInput} from "./src/components/";
