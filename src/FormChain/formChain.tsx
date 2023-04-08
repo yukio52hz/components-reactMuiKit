@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react'
 import { Button, DialogActions, DialogContent, DialogTitle, FormControlLabel, Grid, Switch, TextField } from '@mui/material';
 import { Input } from '../components/Input';
 import { MultiInput } from '../components';
+import { purple } from '@mui/material/colors';
 
 type ChainsDomain = {
     id?: number;
@@ -121,7 +122,7 @@ function FormChain({ closeModal, action }: Props) {
                             />
                         </Grid>
                         <Grid item xs={12}>
-                            <MultiInput onSubmit={handleSubmit} valuesInputs={['farid', 'lucas', 'Memo', 'Arrianna']} label={"Url"} />
+                            <MultiInput onSubmit={handleSubmit} valuesInputs={['farid', 'lucas', 'Memo', 'Arrianna']} btnAdd={{background:'red','&:hover':{background:'#000'}}} label={"Url"} />
                         </Grid>
                     </Grid>
                     <DialogActions>

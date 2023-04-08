@@ -3,7 +3,7 @@ import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
 import { Modal, SearchFilter } from './components'
-import { Button, Typography } from '@mui/material'
+import { Button, Grid, Typography } from '@mui/material'
 
 import { FormChain } from './FormChain'
 import { AlertDelete } from './components/AlertDelete'
@@ -50,16 +50,23 @@ function App() {
       <p className="read-the-docs">
         Click on the Vite and React logos to learn more
       </p>
-      <SearchFilter wordForSearh={paginationFilters}
-        iconSearch={<SearchIcon />}
-      />
+     
+      <Grid container>
+        <Grid item xs={12}>
+          <SearchFilter wordForSearh={paginationFilters}
+            iconSearch={<SearchIcon sx={{ color: "#4E83E3" }} />}
+            searchStyle={{background:"#E0EBFF"}}
+            size="medium"
+          />
+        </Grid>
+      </Grid>
       <AlertDelete
         icon={<ReportProblemIcon sx={{ fontSize: 50, color: red[500] }} />}
         close={handleModalClose}
         open={false}
         agreeDelete={agreeDelete}
         titleModal={<Typography fontSize={20}>Eliminar</Typography>}
-        bodyText={<>Se borraran todos los datos referentes a este registro de forma pertenente.<br/><br/>Desea proceder</>}
+        bodyText={<>Se borraran todos los datos referentes a este registro de forma pertenente.<br /><br />Desea proceder</>}
       />
       <Modal
         isOpen={isOpen}

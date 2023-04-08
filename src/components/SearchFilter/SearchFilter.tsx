@@ -1,14 +1,18 @@
 import { ReactElement, useState } from 'react';
-import { InputAdornment,TextField } from '@mui/material'
+import { InputAdornment,SxProps,TextField, Theme } from '@mui/material'
 
 export interface SearchFilterProps {
     wordForSearh: Function,
     placeholder?: string,
     iconSearch?: ReactElement,
     iconClear?: ReactElement | string,
+    searchStyle?: SxProps<Theme> | undefined,
+    size?: "medium" | "small",
     variant?: "standard" | "filled" | "outlined" | undefined,
+    fullWidth?: boolean | undefined,
+
 }
-export const SearchFilter = ({ wordForSearh, placeholder = 'buscar', iconSearch, iconClear = "x", variant = undefined }: SearchFilterProps) => {
+export const SearchFilter = ({ wordForSearh, placeholder = 'buscar', iconSearch,fullWidth = true, iconClear = "x", variant = undefined,searchStyle={},size="small" }: SearchFilterProps) => {
     const [showClearIcon, setShowClearIcon] = useState("none");
     const inputHandler = (event: React.ChangeEvent<HTMLInputElement>| any) => {
         setShowClearIcon(event.target.value === "" ? "none" : "flex");
@@ -20,16 +24,17 @@ export const SearchFilter = ({ wordForSearh, placeholder = 'buscar', iconSearch,
         const searchInput = document.getElementById("searchInput")as HTMLInputElement;
         searchInput ? searchInput.value = "": undefined
         setShowClearIcon("none");
-        
+        wordForSearh(['search=', 'page=1']);
     };
     return (
         <TextField
             id="searchInput"
-            size="small"
+            fullWidth={fullWidth}
+            size={size}
             variant={variant}
             onChange={inputHandler}
             placeholder={placeholder}
-            sx={{ background: "#fff" }}
+            sx={searchStyle}
             InputProps={{
                 startAdornment: (
                     <InputAdornment position="start">

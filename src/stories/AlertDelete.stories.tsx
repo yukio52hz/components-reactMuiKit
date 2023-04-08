@@ -29,6 +29,6 @@ WithIcon.args = {
   titleModal: 'Are you sure you want to delete this item?',
   bodyText:
     'Deleting this item will permanently remove it from your account. This action cannot be undone.',
-  btnCancel: 'Cancel',
-  btnSucces: 'Delete',
+  btnClose: 'Cancel',
+  btnAccept: 'Delete',
 };

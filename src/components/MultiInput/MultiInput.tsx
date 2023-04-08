@@ -1,5 +1,5 @@
 import  {  ReactElement, useEffect, useState } from "react";
-import { TextField, Button, Box } from "@mui/material";
+import { TextField, Button, Box, SxProps, Theme } from "@mui/material";
 
 
 export interface Item {
@@ -19,12 +19,14 @@ export interface MultiInputProps {
     valuesInputs?: string[],
     iconMore?: ReactElement | string,
     iconLess?: ReactElement | string,
-    label?:string
+    label?:string,
+    btnAdd?: SxProps<Theme> | undefined,
+    btnRomove?: SxProps<Theme> | undefined,
 }
 
 export const MultiInput = ({ onSubmit, fullWidth = true, variant = undefined, textRequired = 'Input is required',
 textMaxInput='Max number inputs', valuesInputs = [], color = undefined, direction = "column", maxInputs = Infinity,
-iconMore="+",iconLess="-",label="Input"}: MultiInputProps) => {
+iconMore="+",iconLess="-",label="Input",btnAdd={},btnRomove={}}: MultiInputProps) => {
 
     const [inputs, setInputs] = useState<Item[]>([{ valueText: '', disabled: false }]);
     const [inputValue, setInput] = useState('');
@@ -34,7 +36,7 @@ iconMore="+",iconLess="-",label="Input"}: MultiInputProps) => {
 
     const [edit, setedit] = useState(true)
 
-    const handleInputChange = (index: number, value: string) => {
+    const handleInputChange = (value: string) => {
         setInput(value);
     };
 
@@ -53,7 +55,7 @@ iconMore="+",iconLess="-",label="Input"}: MultiInputProps) => {
         }
         setInput('')
     };
-    const handleRemoveInput = (index: any, event: any) => {
+    const handleRemoveInput = (index: any) => {
         const list = [...inputs]
         list.splice(index, 1)
         setInputs(list)
@@ -106,7 +108,7 @@ iconMore="+",iconLess="-",label="Input"}: MultiInputProps) => {
                         input.disabled == false ?
                             <><TextField
                                 value={inputValue}
-                                onChange={(event) => handleInputChange(index, event.target.value)}
+                                onChange={(event) => handleInputChange(event.target.value)}
                                 label={`${label}`}
                                 margin="normal"
                                 error={err}
@@ -115,7 +117,7 @@ iconMore="+",iconLess="-",label="Input"}: MultiInputProps) => {
                                 fullWidth={fullWidth}
                                 variant={variant}
                                 color={color}
-                            /> <Button sx={{ minWidth: "20px", borderRadius: "50%", m: 2 }} variant="contained"
+                            /> <Button sx={{ minWidth: "20px", borderRadius: "50%", m: 2 ,...btnAdd}} variant="contained"
                                 color="primary" onClick={handleAddInput} disabled={action == 'maxInput' ? true : false} >
                                    {iconMore}
                                 </Button>
@@ -123,7 +125,7 @@ iconMore="+",iconLess="-",label="Input"}: MultiInputProps) => {
                             <>
                                 <TextField
                                     value={input.valueText}
-                                    onChange={(event) => handleInputChange(index, event.target.value)}
+                                    onChange={(event) => handleInputChange(event.target.value)}
                                     label={`${label} ${index - 1 + 1}`}
                                     margin="normal"
                                     fullWidth={fullWidth}
@@ -131,7 +133,7 @@ iconMore="+",iconLess="-",label="Input"}: MultiInputProps) => {
                                     disabled={input.disabled}
                                     color={color}
                                 />
-                                <Button sx={{ minWidth: "20px", borderRadius: "50%", m: 2 }} variant="contained" color="warning" onClick={(event) => handleRemoveInput(index, event)} >
+                                <Button sx={{ minWidth: "20px", borderRadius: "50%", m: 2,...btnRomove }} variant="contained" color="warning" onClick={() => handleRemoveInput(index)} >
                                    {iconLess}
                                 </Button>
                             </>
