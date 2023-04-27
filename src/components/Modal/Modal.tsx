@@ -1,16 +1,21 @@
-import { Dialog } from '@mui/material';
+import { Theme } from '@emotion/react';
+import { Dialog, SxProps } from '@mui/material';
 import { ReactNode } from 'react';
 export interface ModalProps {
   isOpen?: boolean,
   onClose?: ()=>void,
   children?: ReactNode,
+  widthModal?: string,
+  modalStyle?:SxProps<Theme> | undefined
+  
 }
 export const Modal = ({ isOpen=false, onClose, 
-  children="" }: ModalProps) => {
+  children="" ,widthModal='auto',modalStyle={}}: ModalProps) => {
   return (
     <Dialog
       open={isOpen}
       onClose={onClose}
+      sx={{'.MuiPaper-elevation':{width: widthModal,p:2},...modalStyle}}
     >
       {children}
       

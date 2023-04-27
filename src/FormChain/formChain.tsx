@@ -25,7 +25,7 @@ function FormChain({ closeModal, action }: Props) {
         title: '',
         description: '',
         name: '',
-        inputs:[],
+        inputs:['pingas','texta'],
         active: false
     })
 
@@ -35,7 +35,8 @@ function FormChain({ closeModal, action }: Props) {
         title: yup.string().required('Title is required'),
         description: yup.string().required('Description is required'),
         name: yup.string().required('name is required'),
-        active: yup.boolean()
+        active: yup.boolean(),
+        inputs:yup.array().min(1, 'Debe haber al menos un elemento en el array'),
     });
 
     const formik = useFormik({
@@ -53,14 +54,30 @@ function FormChain({ closeModal, action }: Props) {
         },
     });
     const handleSubmit = (inputs: any[]) => {
-        
+        console.log(inputs,"llegada del multi")
+       /*  console.log(inputs,"llegada del multi")
+        setArray(inputs) 
+        const poto = chain
+        poto.inputs = array
+        setChain(prevState => ({ ...prevState, inputs: array }))
+        console.log(chain,'objeto cambiado') */
         setArray(inputs)
+       
+        
+        
       };
     useEffect(() => {
+      /*  setChain({...chain,inputs : array})
+        console.log(chain,'objeto cambiado') 
+        setMyObject(prevState => ({ ...prevState, myArray: newArray }));
+         const poto = chain
+        poto.inputs = array
+        */
+        setChain(prevState => ({ ...prevState, inputs: array }))
         if (action === 'update') {
 
         }
-    }, [action])
+    }, [action,array])
     return (
         <>
             <DialogTitle>
@@ -122,7 +139,16 @@ function FormChain({ closeModal, action }: Props) {
                             />
                         </Grid>
                         <Grid item xs={12}>
-                            <MultiInput onSubmit={handleSubmit} valuesInputs={['farid', 'lucas', 'Memo', 'Arrianna']} btnAdd={{background:'red','&:hover':{background:'#000'}}} label={"Url"} />
+                            <MultiInput 
+                             onSubmit={handleSubmit}
+                             id="inputs"
+                             name='inputs'
+                             valuesInputs={formik.values.inputs} 
+                             helperText={formik.touched.inputs && formik.errors.inputs} 
+                             error={formik.touched.inputs && Boolean(formik.errors.inputs)}
+                             btnAddStyle={{background:'red','&:hover':{background:'#000'}}}
+                             isRequired={true}
+                              label={"Url"} />
                         </Grid>
                     </Grid>
                     <DialogActions>

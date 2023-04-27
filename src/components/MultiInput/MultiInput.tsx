@@ -1,4 +1,4 @@
-import  {  ReactElement, useEffect, useState } from "react";
+import { ReactElement, ReactNode, useEffect, useState } from "react";
 import { TextField, Button, Box, SxProps, Theme } from "@mui/material";
 
 
@@ -9,8 +9,7 @@ export interface Item {
 
 export interface MultiInputProps {
     onSubmit: (inputs: string[]) => void;
-    textRequired?: string,
-    textMaxInput ?: string,
+    textMaxInput?: string,
     fullWidth?: boolean | undefined,
     variant?: "standard" | "filled" | "outlined" | undefined,
     color?: "error" | "primary" | "secondary" | "info" | "success" | "warning" | undefined,
@@ -19,30 +18,33 @@ export interface MultiInputProps {
     valuesInputs?: string[],
     iconMore?: ReactElement | string,
     iconLess?: ReactElement | string,
-    label?:string,
-    btnAdd?: SxProps<Theme> | undefined,
-    btnRomove?: SxProps<Theme> | undefined,
+    label?: string,
+    btnAddStyle?: SxProps<Theme> | undefined,
+    btnRemoveStyle?: SxProps<Theme> | undefined,
+    helperText?: ReactNode,
+    error?: boolean | undefined,
+    isRequired?: boolean,
+    id?: string | undefined,
+    name?: string | undefined,
+    textInputRequired?:  ReactNode,
 }
 
-export const MultiInput = ({ onSubmit, fullWidth = true, variant = undefined, textRequired = 'Input is required',
-textMaxInput='Max number inputs', valuesInputs = [], color = undefined, direction = "column", maxInputs = Infinity,
-iconMore="+",iconLess="-",label="Input",btnAdd={},btnRomove={}}: MultiInputProps) => {
+export const MultiInput = ({ onSubmit, fullWidth = true, variant = undefined,
+    textMaxInput = 'Max number inputs', valuesInputs = [], color = undefined, direction = "column", maxInputs = Infinity,
+    iconMore = "+", iconLess = "-", label = "Input", btnAddStyle = {}, btnRemoveStyle = {}, helperText = '', isRequired = false, id = "", name = "", error = false ,textInputRequired="This input is required" }: MultiInputProps) => {
 
     const [inputs, setInputs] = useState<Item[]>([{ valueText: '', disabled: false }]);
     const [inputValue, setInput] = useState('');
-    const [helpMessage, setHelpMessage] = useState('');
-    const [err, setErr] = useState(false);
+    const [helpMessage, setHelpMessage] = useState(helperText);
+    const [err, setErr] = useState(error);
     const [action, setAction] = useState('');
-
-    const [edit, setedit] = useState(true)
-
     const handleInputChange = (value: string) => {
         setInput(value);
     };
 
     const handleAddInput = () => {
-        if (inputValue.length == 0) {
-            setHelpMessage(textRequired)
+        if (inputValue.length === 0 && isRequired === true) {
+            setHelpMessage(textInputRequired)
             setErr(true)
             return
         } else {
@@ -69,36 +71,49 @@ iconMore="+",iconLess="-",label="Input",btnAdd={},btnRomove={}}: MultiInputProps
                     arrayString.push(element.valueText)
                 }
             });
+
             onSubmit(arrayString)
             setAction('')
         }
     }
     const updateData = () => {
-        if (valuesInputs.length > 0 && edit) {
-            const newInputs = [...inputs];
-            valuesInputs.forEach(element => {
-                newInputs.push({ valueText: element, disabled: true })
-            });
-            setInputs(newInputs);
-            setedit(false)
+        //console.log(valuesInputs,'valuesInputs')
+        let isEdit;
+        if (valuesInputs.length > 0) {
+            //console.log('step1')
+            if (inputs.length == 1) {
+                isEdit = true
+                //console.log(isEdit,'step2')
+                if (isEdit) {
+                    console.log('step3')
+                    const newInputs = [...inputs];
+                    valuesInputs.forEach(element => {
+                        newInputs.push({ valueText: element, disabled: true })
+                    });
+                    setInputs(newInputs);
+                    //setedit(false)
+                    isEdit = false
+                }
+            }
+            console.log('fuera')
         }
     }
     const maxInputsValidation = () => {
         if (inputs.length - 1 == maxInputs) {
             setAction('maxInput'),
-            setHelpMessage(textMaxInput)
+                setHelpMessage(textMaxInput)
         } else {
             setAction(''),
-            setHelpMessage("")
+                setHelpMessage("")
         }
     }
     useEffect(() => {
-        updateData(),
-            addData(),
-            maxInputsValidation()
-    }, [action])
-
-
+        updateData()
+        addData(),
+            maxInputsValidation(),
+            setHelpMessage(helperText)
+        setErr(error)
+    }, [action, helperText, error])
 
     return (
         <Box sx={{ display: "flex", flexDirection: direction }}>
@@ -107,6 +122,8 @@ iconMore="+",iconLess="-",label="Input",btnAdd={},btnRomove={}}: MultiInputProps
                     {
                         input.disabled == false ?
                             <><TextField
+                                id={id}
+                                name={name}
                                 value={inputValue}
                                 onChange={(event) => handleInputChange(event.target.value)}
                                 label={`${label}`}
@@ -117,9 +134,9 @@ iconMore="+",iconLess="-",label="Input",btnAdd={},btnRomove={}}: MultiInputProps
                                 fullWidth={fullWidth}
                                 variant={variant}
                                 color={color}
-                            /> <Button sx={{ minWidth: "20px", borderRadius: "50%", m: 2 ,...btnAdd}} variant="contained"
+                            /> <Button sx={{ minWidth: "20px", borderRadius: "50%", m: 2, ...btnAddStyle }} variant="contained"
                                 color="primary" onClick={handleAddInput} disabled={action == 'maxInput' ? true : false} >
-                                   {iconMore}
+                                    {iconMore}
                                 </Button>
                             </> :
                             <>
@@ -133,8 +150,8 @@ iconMore="+",iconLess="-",label="Input",btnAdd={},btnRomove={}}: MultiInputProps
                                     disabled={input.disabled}
                                     color={color}
                                 />
-                                <Button sx={{ minWidth: "20px", borderRadius: "50%", m: 2,...btnRomove }} variant="contained" color="warning" onClick={() => handleRemoveInput(index)} >
-                                   {iconLess}
+                                <Button sx={{ minWidth: "20px", borderRadius: "50%", m: 2, ...btnRemoveStyle }} variant="contained" color="warning" onClick={() => handleRemoveInput(index)} >
+                                    {iconLess}
                                 </Button>
                             </>
                     }
