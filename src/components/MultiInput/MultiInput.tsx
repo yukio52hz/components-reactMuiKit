@@ -151,6 +151,7 @@ export const MultiInput = ({ onSubmit, fullWidth = true, variant = undefined,
                                     variant={variant}
                                     disabled={input.disabled}
                                     color={color}
+                                    sx={inputStyle}
                                 />
                                 <Button sx={{ minWidth: "20px", borderRadius: "50%", m: 2, ...btnRemoveStyle }} variant="contained" color="warning" onClick={() => handleRemoveInput(index)} >
                                     {iconLess}
