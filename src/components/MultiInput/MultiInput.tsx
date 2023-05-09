@@ -28,11 +28,12 @@ export interface MultiInputProps {
     name?: string | undefined,
     textInputRequired?:  ReactNode,
     inputStyle?:SxProps<Theme> | undefined,
+    valueStyles?:SxProps<Theme> | undefined,
 }
 
 export const MultiInput = ({ onSubmit, fullWidth = true, variant = undefined,
     textMaxInput = 'Max number inputs', valuesInputs = [], color = undefined, direction = "column", maxInputs = Infinity,
-    iconMore = "+", iconLess = "-", label = "Input", btnAddStyle = {}, btnRemoveStyle = {}, helperText = '', isRequired = false, id = "", name = "", error = false ,textInputRequired="This input is required",inputStyle={} }: MultiInputProps) => {
+    iconMore = "+", iconLess = "-", label = "Input", btnAddStyle = {}, btnRemoveStyle = {}, helperText = '', isRequired = false, id = "", name = "", error = false ,textInputRequired="This input is required",inputStyle={},valueStyles={} }: MultiInputProps) => {
 
     const [inputs, setInputs] = useState<Item[]>([{ valueText: '', disabled: false }]);
     const [inputValue, setInput] = useState('');
@@ -151,7 +152,7 @@ export const MultiInput = ({ onSubmit, fullWidth = true, variant = undefined,
                                     variant={variant}
                                     disabled={input.disabled}
                                     color={color}
-                                    sx={inputStyle}
+                                    sx={valueStyles}
                                 />
                                 <Button sx={{ minWidth: "20px", borderRadius: "50%", m: 2, ...btnRemoveStyle }} variant="contained" color="warning" onClick={() => handleRemoveInput(index)} >
                                     {iconLess}
