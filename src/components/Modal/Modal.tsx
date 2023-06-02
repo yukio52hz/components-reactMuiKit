@@ -15,7 +15,7 @@ export const Modal = ({ isOpen=false, onClose,
     <Dialog
       open={isOpen}
       onClose={onClose}
-      sx={{'.MuiPaper-elevation':{width: widthModal,p:2},...modalStyle}}
+      sx={{'.MuiPaper-elevation':{width: widthModal},...modalStyle}}
     >
       {children}
       
