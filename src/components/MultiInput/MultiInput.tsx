@@ -29,11 +29,14 @@ export interface MultiInputProps {
     textInputRequired?:  ReactNode,
     inputStyle?:SxProps<Theme> | undefined,
     valueStyles?:SxProps<Theme> | undefined,
+    textValidateUrl?:ReactNode,
+    validateUrl?: boolean
 }
 
 export const MultiInput = ({ onSubmit, fullWidth = true, variant = undefined,
     textMaxInput = 'Max number inputs', valuesInputs = [], color = undefined, direction = "column", maxInputs = Infinity,
-    iconMore = "+", iconLess = "-", label = "Input", btnAddStyle = {}, btnRemoveStyle = {}, helperText = '', isRequired = false, id = "", name = "", error = false ,textInputRequired="This input is required",inputStyle={},valueStyles={} }: MultiInputProps) => {
+    iconMore = "+", iconLess = "-", label = "Input", btnAddStyle = {}, btnRemoveStyle = {}, helperText = '', isRequired = false, id = "", name = "", 
+    error = false ,textInputRequired="This input is required",inputStyle={},valueStyles={},validateUrl=false,textValidateUrl="Ingrese url valida" }: MultiInputProps) => {
 
     const [inputs, setInputs] = useState<Item[]>([{ valueText: '', disabled: false }]);
     const [inputValue, setInput] = useState('');
@@ -49,7 +52,11 @@ export const MultiInput = ({ onSubmit, fullWidth = true, variant = undefined,
             setHelpMessage(textInputRequired)
             setErr(true)
             return
-        } else {
+        } else if (urlValidation(inputValue) === false && validateUrl === true){
+            setHelpMessage(textValidateUrl)
+            setErr(true)
+            return
+        }else {
             setHelpMessage('')
             setErr(false)
             const newInputs = [...inputs];
@@ -108,6 +115,9 @@ export const MultiInput = ({ onSubmit, fullWidth = true, variant = undefined,
             setAction(''),
                 setHelpMessage("")
         }
+    }
+    const urlValidation = (value:string)=>{
+       return /^(http|https):\/\/[^ "]+$/.test(value)
     }
     useEffect(() => {
         updateData()
