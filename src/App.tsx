@@ -50,12 +50,12 @@ function App() {
       <p className="read-the-docs">
         Click on the Vite and React logos to learn more
       </p>
-     
+
       <Grid container>
         <Grid item xs={12}>
           <SearchFilter wordForSearh={paginationFilters}
             iconSearch={<SearchIcon sx={{ color: "#4E83E3" }} />}
-            searchStyle={{background:"#E0EBFF"}}
+            searchStyle={{ background: "#E0EBFF" }}
             size="medium"
           />
         </Grid>
@@ -66,7 +66,7 @@ function App() {
         open={false}
         agreeDelete={agreeDelete}
         titleModal={<Typography fontSize={20}>Eliminar</Typography>}
-        bodyText={<>Se borraran todos los datos referentes a este registro de forma pertenente.<br /><br />Desea proceder</>}
+        bodyContent={<>Se borraran todos los datos referentes a este registro de forma pertenente.<br /><br />Desea proceder</>}
       />
       <Modal
         isOpen={isOpen}
