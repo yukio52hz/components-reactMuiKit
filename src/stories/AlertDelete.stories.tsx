@@ -1,14 +1,14 @@
 import { Meta, Story } from '@storybook/react';
-import {AlertDelete,AlertDeleteProps } from '../components';
+import { AlertDelete, AlertDeleteProps } from '../components';
 
 
 export default {
   component: AlertDelete,
   title: 'components/AlertDelete',
- 
+
 } as Meta;
 
-const Template: Story<AlertDeleteProps> =(args) => <AlertDelete {...args} />;
+const Template: Story<AlertDeleteProps> = (args) => <AlertDelete {...args} />;
 
 
 export const Default = Template.bind({});
@@ -18,7 +18,7 @@ export const WithTitleAndText = Template.bind({});
 WithTitleAndText.args = {
   open: true,
   titleModal: 'Are you sure you want to delete this item?',
-  bodyText:
+  bodyContent:
     'Deleting this item will permanently remove it from your account. This action cannot be undone.',
 };
 
@@ -27,7 +27,7 @@ WithIcon.args = {
   open: true,
   icon: <i className="material-icons">warning</i>,
   titleModal: 'Are you sure you want to delete this item?',
-  bodyText:
+  bodyContent:
     'Deleting this item will permanently remove it from your account. This action cannot be undone.',
   btnClose: 'Cancel',
   btnAccept: 'Delete',
