@@ -2,7 +2,7 @@ import {
     AppBar, Box, Button, ClickAwayListener, Divider, Grow, IconButton, ListItemIcon,
     ListItemText, MenuItem, MenuList, Paper, Popper, SxProps, Theme, Toolbar, Typography
 } from "@mui/material"
-import { ReactElement, SyntheticEvent, useRef, useState } from "react"
+import { ReactElement, ReactNode, SyntheticEvent, useRef, useState } from "react"
 const icon_properties = {
     width: '30px',
     height: '30px',
@@ -21,13 +21,6 @@ export interface AppsType {
     url: string
     client_id: string
 }
-export interface TextMapping {
-    titleMenu: string;
-    generalOption: string;
-    nameSystem: string;
-    btnLogout: string;
-    userName: string;
-}
 
 export interface NavbarProps {
     apps?: AppsType[],
@@ -43,18 +36,21 @@ export interface NavbarProps {
     btnLogoutStyle?: SxProps<Theme> | undefined,
     btnsettingStyle?: SxProps<Theme> | undefined,
     btnMenuStyle?: SxProps<Theme> | undefined,
-    navBarTexts?: TextMapping,
     translateTextMenu?: (text: string | undefined) => string,
     menuStyle?: SxProps<Theme> | undefined,
+    titleMenu?: ReactNode,
+    generalOption?: ReactNode,
+    nameSystem?: ReactNode,
+    userName?: ReactNode,
+    btnLogoutText?: ReactNode
 
 }
 
 const NavBar = ({ apps = [], menuNavbarIcons, toLogout, toSettings, logoutIcon, settingsIcon,
     menuNavbarIcon, avatarIcon, appBarStyle = {}, btnLogoutStyle = {},
-    btnsettingStyle = {}, navBarTexts, btnMenuStyle, menuStyle, translateTextMenu }: NavbarProps) => {
+    btnsettingStyle = {}, btnMenuStyle, menuStyle, translateTextMenu, titleMenu, generalOption, nameSystem, userName, btnLogoutText }: NavbarProps) => {
     const [open, setOpen] = useState(false)
     const anchorRef = useRef<HTMLButtonElement>(null)
-    const [texts, setTexts] = useState(navBarTexts)
 
     const handleToggle = () => {
         setOpen((prevOpen) => !prevOpen)
@@ -119,7 +115,7 @@ const NavBar = ({ apps = [], menuNavbarIcons, toLogout, toSettings, logoutIcon, 
                                             fontWeight={"600"}
                                             variant="body1"
                                         >
-                                            {translateTextMenu && translateTextMenu(texts?.titleMenu)}
+                                            {titleMenu}
                                         </Typography>
                                         {apps.map((app: AppsType) => (
                                             <MenuItem key={app.client_id} onClick={() => window.location.href = app.url}>
@@ -146,7 +142,7 @@ const NavBar = ({ apps = [], menuNavbarIcons, toLogout, toSettings, logoutIcon, 
                                                 variant="contained"
                                                 onClick={toSettings}
                                                 startIcon={settingsIcon}>
-                                                {texts?.generalOption}
+                                                {generalOption}
                                             </Button>
                                         </MenuItem>
                                     </MenuList>
@@ -156,7 +152,7 @@ const NavBar = ({ apps = [], menuNavbarIcons, toLogout, toSettings, logoutIcon, 
                     )}
                 </Popper>
                 <Typography fontWeight={"600"} variant="h6" component="div" sx={{ flexGrow: 1, textAlign: "initial" }}>
-                    {window.location.pathname != '/' ? (translateTextMenu && translateTextMenu(texts?.generalOption)) : (translateTextMenu && translateTextMenu(texts?.nameSystem))}
+                    {window.location.pathname != '/' ? generalOption : nameSystem}
                 </Typography>
                 <Box
                     sx={{
@@ -183,14 +179,14 @@ const NavBar = ({ apps = [], menuNavbarIcons, toLogout, toSettings, logoutIcon, 
                             marginRight: "2rem"
                         }}
                     >
-                        {translateTextMenu && translateTextMenu(texts?.userName)}
+                        {userName}
                     </Typography>
 
                     <Button sx={{ ...btnLogoutStyle }}
                         variant="contained"
                         onClick={toLogout}
                         startIcon={logoutIcon}>
-                        {translateTextMenu && translateTextMenu(texts?.btnLogout)}
+                        {btnLogoutText}
                     </Button>
                 </Box>
             </Toolbar>

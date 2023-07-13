@@ -48,13 +48,12 @@ function App() {
         client_id: "erp"
       }]}
         menuNavbarIcons={{ "erp": <HomeIcon fontSize="small" color="primary" /> }}
-        navBarTexts={{
-          titleMenu: "change to",
-          generalOption: "geraloption",
-          nameSystem: "erp systen",
-          btnLogout: "salir",
-          userName: "farid Gamboa matarrita"
-        }} menuNavbarIcon={<AppsIcon />}
+        titleMenu={"change to"}
+        generalOption={"geraloption"}
+        nameSystem={"erp systen"}
+        btnLogoutText={"salir"}
+        userName={"test cafe"}
+        menuNavbarIcon={<AppsIcon />}
         appBarStyle={{ background: "#3E6CC1" }}
         logoutIcon={<LogoutIcon />}
         settingsIcon={<SettingsIcon />}
