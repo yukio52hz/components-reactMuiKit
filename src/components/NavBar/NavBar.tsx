@@ -44,13 +44,14 @@ export interface NavbarProps {
     btnsettingStyle?: SxProps<Theme> | undefined,
     btnMenuStyle?: SxProps<Theme> | undefined,
     navBarTexts?: TextMapping,
-    translateTextMenu?: (text: string) => string
+    translateTextMenu?: (text: string | undefined) => string,
+    menuStyle?: SxProps<Theme> | undefined,
 
 }
 
 const NavBar = ({ apps = [], menuNavbarIcons, toLogout, toSettings, logoutIcon, settingsIcon,
     menuNavbarIcon, avatarIcon, appBarStyle = {}, btnLogoutStyle = {},
-    btnsettingStyle = {}, navBarTexts, btnMenuStyle, translateTextMenu }: NavbarProps) => {
+    btnsettingStyle = {}, navBarTexts, btnMenuStyle, menuStyle, translateTextMenu }: NavbarProps) => {
     const [open, setOpen] = useState(false)
     const anchorRef = useRef<HTMLButtonElement>(null)
     const [texts, setTexts] = useState(navBarTexts)
@@ -111,14 +112,14 @@ const NavBar = ({ apps = [], menuNavbarIcons, toLogout, toSettings, logoutIcon, 
                                     placement === 'bottom-start' ? 'left top' : 'left bottom',
                             }}
                         >
-                            <Paper sx={{ padding: '12px', zIndex: '9999999', backgroundColor: '#F1F5FC' }}>
+                            <Paper sx={{ padding: '12px', zIndex: '9999999', ...menuStyle }}>
                                 <ClickAwayListener onClickAway={handleClose}>
                                     <MenuList>
                                         <Typography sx={{ paddingLeft: '16px', marginBottom: '18px', textAlign: "initial" }}
                                             fontWeight={"600"}
                                             variant="body1"
                                         >
-                                            {texts?.titleMenu}
+                                            {translateTextMenu && translateTextMenu(texts?.titleMenu)}
                                         </Typography>
                                         {apps.map((app: AppsType) => (
                                             <MenuItem key={app.client_id} onClick={() => window.location.href = app.url}>
@@ -155,7 +156,7 @@ const NavBar = ({ apps = [], menuNavbarIcons, toLogout, toSettings, logoutIcon, 
                     )}
                 </Popper>
                 <Typography fontWeight={"600"} variant="h6" component="div" sx={{ flexGrow: 1, textAlign: "initial" }}>
-                    {window.location.pathname != '/' ? texts?.generalOption : texts?.nameSystem}
+                    {window.location.pathname != '/' ? (translateTextMenu && translateTextMenu(texts?.generalOption)) : (translateTextMenu && translateTextMenu(texts?.nameSystem))}
                 </Typography>
                 <Box
                     sx={{
@@ -182,14 +183,14 @@ const NavBar = ({ apps = [], menuNavbarIcons, toLogout, toSettings, logoutIcon, 
                             marginRight: "2rem"
                         }}
                     >
-                        {texts?.userName}
+                        {translateTextMenu && translateTextMenu(texts?.userName)}
                     </Typography>
 
                     <Button sx={{ ...btnLogoutStyle }}
                         variant="contained"
                         onClick={toLogout}
                         startIcon={logoutIcon}>
-                        {texts?.btnLogout}
+                        {translateTextMenu && translateTextMenu(texts?.btnLogout)}
                     </Button>
                 </Box>
             </Toolbar>

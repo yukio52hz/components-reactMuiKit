@@ -32,7 +32,7 @@ function App() {
   const paginationFilters = (prop: string[]) => {
     console.log(prop)
   };
-  const translateTextMenu = (text: string): string => {
+  const translateTextMenu = (text: string | undefined): string => {
     return `uwu - ${text}`
   };
   const [countPages, setCounPages] = useState(0);
