@@ -60,9 +60,9 @@ Default.args = {
         btnLogout: 'Logout',
         userName: 'User Name',
     },
-    translateTextMenu: (text) => {
+    translateTextMenu: (text: string | undefined): string => {
         // Lógica para traducir el texto del menú
-        return text;
+        return `${text}`;
     },
 };
 
