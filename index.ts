@@ -1,1 +1,1 @@
-export { Input, Modal, AlertDelete, SearchFilter, MultiInput, NavBar } from "./src/components/";
+export { Input, Modal, AlertDelete, SearchFilter, MultiInput, NavBar, MenuOptions } from "./src/components/";

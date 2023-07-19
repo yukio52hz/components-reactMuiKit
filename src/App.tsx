@@ -2,7 +2,7 @@ import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
-import { Modal, NavBar, SearchFilter } from './components'
+import { MenuOptions, Modal, NavBar, SearchFilter } from './components'
 import { Avatar, Button, Grid, Typography } from '@mui/material'
 
 import { FormChain } from './FormChain'
@@ -17,6 +17,10 @@ import AppsIcon from '@mui/icons-material/Apps'
 import LogoutIcon from "@mui/icons-material/Logout"
 import empty_perfil from "./assets/img/empty_perfil.svg"
 import SettingsIcon from "@mui/icons-material/Settings"
+
+import DeleteIcon from "@mui/icons-material/Delete";
+import EditIcon from "@mui/icons-material/Edit";
+import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 function App() {
   const [count, setCount] = useState(0)
   const [isOpen, setOpen] = useState(false)
@@ -36,6 +40,39 @@ function App() {
     return `uwu - ${text}`
   };
   const [countPages, setCounPages] = useState(0);
+  const [text, settext] = useState("salir")
+  const handleUpdate = (prop: any) => {
+    console.log(prop)
+
+  };
+
+  const handleDelete = (prop: any) => {
+    console.log(prop)
+  };
+  const options = [
+    {
+      name: "edit",
+      event: handleUpdate,
+      icon: EditIcon,
+      active: true,
+      colorIcon: "yellow",
+      colorText: "#000"
+    },
+    {
+      name: "delete",
+      event: handleDelete,
+      icon: DeleteIcon,
+      active: true,
+      colorIcon: "yellow",
+      colorText: "#000"
+    },
+  ];
+
+  const list: any = [
+    { name: "Lucas", age: "3", id: "3" },
+    { name: "Farid", age: "27", id: "2" },
+    { name: "Ari", age: "22", id: "1" },
+  ]
   return (
     <div className="App">
       <NavBar apps={[{
@@ -48,21 +85,23 @@ function App() {
         client_id: "erp"
       }]}
         menuNavbarIcons={{ "erp": <HomeIcon fontSize="small" color="primary" /> }}
+
         titleMenu={"change to"}
         generalOption={"geraloption"}
         nameSystem={"erp systen"}
-        btnLogoutText={"salir"}
+        btnLogoutText={text}
         userName={"test cafe"}
         menuNavbarIcon={<AppsIcon />}
         appBarStyle={{ background: "#3E6CC1" }}
         logoutIcon={<LogoutIcon />}
         settingsIcon={<SettingsIcon />}
-        /* avatarIcon={<Avatar
+        menuStyle={{}}
+        avatarIcon={<Avatar
           alt="Remy Sharp"
-          src={empty_perfil}
+          src={"https://avatars.githubusercontent.com/u/65829827?v=4"}
           sx={{ width: 30, height: 30, textAlign: "center", marginRight: "0.7rem" }}
 
-        />} */ btnLogoutStyle={{
+        />} btnLogoutStyle={{
           color: "#4E83E3", backgroundColor: "white", "&:hover": {
             backgroundColor: "white"
           }
@@ -74,6 +113,7 @@ function App() {
             outline: "none"
           }
         }}
+        btnsettingStyle={{}}
         translateTextMenu={translateTextMenu}
       />
       <div>
@@ -96,7 +136,8 @@ function App() {
       <p className="read-the-docs">
         Click on the Vite and React logos to learn more
       </p>
-
+      <button onClick={() => settext("test")}>change text</button>
+      <MenuOptions options={options} menuIcon={<MoreHorizIcon />} />
       <Grid container>
         <Grid item xs={12}>
           <SearchFilter wordForSearh={paginationFilters}

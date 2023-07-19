@@ -53,13 +53,6 @@ Default.args = {
     btnMenuStyle: {
         // Estilos para el botón de menú
     },
-    navBarTexts: {
-        titleMenu: 'Menu',
-        generalOption: 'Option',
-        nameSystem: 'System Name',
-        btnLogout: 'Logout',
-        userName: 'User Name',
-    },
     translateTextMenu: (text: string | undefined): string => {
         // Lógica para traducir el texto del menú
         return `${text}`;
