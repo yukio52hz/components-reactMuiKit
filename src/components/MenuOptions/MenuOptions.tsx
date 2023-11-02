@@ -21,9 +21,9 @@ export interface MenuOptionsProps {
 interface MenuItems {
     name: string;
     event: any;
-    icon: OverridableComponent<SvgIconTypeMap> & { muiName: string };
+    icon?: OverridableComponent<SvgIconTypeMap> & { muiName: string };
     active: boolean;
-    colorIcon: string;
+    colorIcon?: string;
     colorText: string;
 }
 const MenuOptions = ({
@@ -92,10 +92,13 @@ const MenuOptions = ({
                                 onClick={() => option.event(obj)}
                             >
                                 <ListItemIcon>
-                                    <option.icon
-                                        fontSize="small"
-                                        sx={{ color: option.colorIcon }}
-                                    />
+                                    {
+                                        option.icon &&
+                                        <option.icon
+                                            fontSize="small"
+                                            sx={{ color: option.colorIcon }}
+                                        />
+                                    }
                                 </ListItemIcon>
                                 {option.name}
                             </MenuItem>

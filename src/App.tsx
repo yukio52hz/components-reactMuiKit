@@ -53,9 +53,7 @@ function App() {
     {
       name: "edit",
       event: handleUpdate,
-      icon: EditIcon,
       active: true,
-      colorIcon: "yellow",
       colorText: "#000"
     },
     {
