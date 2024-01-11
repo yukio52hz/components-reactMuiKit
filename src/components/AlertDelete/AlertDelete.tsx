@@ -1,5 +1,5 @@
 import { ReactElement } from 'react';
-import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Stack, SxProps, Theme } from '@mui/material';
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Stack, SxProps, Theme } from '@mui/material';
 
 export interface AlertDeleteProps {
   open?: boolean,
@@ -14,14 +14,14 @@ export interface AlertDeleteProps {
   btnStylesClose?: SxProps<Theme> | undefined
   widthModal?: string,
   alignTitle?: "start" | "center" | "justify" | "end" | "left" | "right",
-  alignContent?: "start" | "center" | "justify" | "end" | "left" | "right",
+  alignBtn?: "start" | "center" | "justify" | "end" | "left" | "right",
 
 }
 export const AlertDelete = ({ open = false, close, agreeDelete, icon,
   titleModal = "title modal",
   bodyContent = "",
   btnClose = "cancelar", btnAccept = "Aceptar", widthModal = '400px', alignTitle = "center",
-  alignContent = "center", btnStylesClose = {}, btnStylesAccept = {} }: AlertDeleteProps) => {
+  alignBtn = "center", btnStylesClose = {}, btnStylesAccept = {} }: AlertDeleteProps) => {
   return (
     <Dialog
       open={open}
@@ -44,7 +44,7 @@ export const AlertDelete = ({ open = false, close, agreeDelete, icon,
       <DialogContent>
         {bodyContent}
       </DialogContent>
-      <DialogActions>
+      <DialogActions sx={{justifyContent:`${alignBtn}`}}>
         <Button onClick={close} sx={btnStylesClose} >{btnClose}</Button>
         <Button onClick={agreeDelete} variant="contained" sx={btnStylesAccept} autoFocus >
           {btnAccept}
